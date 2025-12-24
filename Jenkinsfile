@@ -36,6 +36,16 @@ pipeline {
                 }
             }
         }
+        stage('Build Image') {
+            steps {
+                script{
+                    withAWS(region:'us-east-1',credentials:'aws-creds') {
+                        sh """
+                            docker build -t catalogue
+                        """
+                    }
+                }
+            }
         stage('Deploy') {
             steps {
                 script{
